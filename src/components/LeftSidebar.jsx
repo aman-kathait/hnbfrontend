@@ -56,38 +56,30 @@ const LeftSidebar = () => {
 
   const sidebarItems = [
     { icon: <Home />, text: 'Home' },
-    {
-      icon: <Search />,
-      text: 'Search',
-      hiddenOnDesktop: true,
-    },
+    { icon: <Search />, text: 'Search', hiddenOnDesktop: true },
     { icon: <TrendingUp />, text: 'Announcement' },
-    {
-      icon: <MessageCircle />,
-      text: 'Messages',
-      hiddenOnDesktop: true,
-    },
-    {
-      icon: <Heart />,
-      text: 'Notifications',
-      hiddenOnDesktop: true,
-    },
+    { icon: <MessageCircle />, text: 'Messages', hiddenOnDesktop: true },
+    { icon: <Heart />, text: 'Notifications', hiddenOnDesktop: true },
     { icon: <PlusSquare />, text: 'Create' },
-    {
-      icon: (
-        <Avatar className="w-7 h-7">
-          <AvatarImage src={user?.profilePicture} alt="@user" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-      ),
-      text: 'Profile',
-    },
     { icon: <LogOut />, text: 'Logout' },
   ]
 
   return (
     <div className="hidden md:block fixed top-16 bg-gray-50 z-10 left-0 px-4 border-r border-gray-300 w-[20%] h-screen">
       <div className="flex flex-col">
+        {/* Profile at the top */}
+        <div
+          onClick={() => sidebarHandler('Profile')}
+          className="flex items-center gap-3 hover:bg-green-100 cursor-pointer rounded-lg p-3 my-3 mt-4"
+        >
+          <Avatar className="w-7 h-7">
+            <AvatarImage src={user?.profilePicture} alt="@user" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <span>Profile</span>
+        </div>
+
+        {/* Other sidebar items */}
         <div>
           {sidebarItems.map((item, index) => {
             const isHidden = item.hiddenOnDesktop
@@ -106,6 +98,7 @@ const LeftSidebar = () => {
           })}
         </div>
       </div>
+
       <CreatePost open={open} setOpen={setOpen} />
     </div>
   )
