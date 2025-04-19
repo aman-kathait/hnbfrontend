@@ -1,5 +1,5 @@
 "use client";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import React, { useState } from "react";
@@ -22,12 +22,11 @@ import {
 const Signup = () => {
   const [input, setInput] = useState({
     firstname: "",
-    lastnamename: "",
-    role: "",
+    lastname: "", // fixed typo here
+    department: "",
     year: "",
     email: "",
     password: "",
-    
   });
 
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -66,12 +65,11 @@ const Signup = () => {
         toast.success(res.data.message);
         setInput({
           firstname: "",
-          lastnamename: "",
-          role: "",
+          lastname: "",
+          department: "",
           year: "",
           email: "",
           password: "",
-         
         });
         setTermsAccepted(false);
       }
@@ -129,16 +127,33 @@ const Signup = () => {
         <div className="flex flex-col md:flex-row gap-4">
           <div className="w-full">
             <Select
-              onValueChange={(value) => setInput({ ...input, role: value })}
-              value={input.role}
+              onValueChange={(value) => setInput({ ...input, department: value })}
+              value={input.department}
+              name="department"
               required
             >
-              <SelectTrigger className="w-full font-semibold">
-                <SelectValue placeholder="Select Role" />
+              <SelectTrigger className="w-full font-semibold text-black">
+                <SelectValue placeholder="Select a department" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="student">Student</SelectItem>
-                <SelectItem value="teacher">Teacher</SelectItem>
+                <SelectGroup>
+                  <SelectLabel>Engineering</SelectLabel>
+                  <SelectItem value="cse">Computer Science (CSE)</SelectItem>
+                  <SelectItem value="me">Mechanical (ME)</SelectItem>
+                  <SelectItem value="it">Information Technology (IT)</SelectItem>
+                  <SelectItem value="ei">Electronics & Instrumentation (EI)</SelectItem>
+                </SelectGroup>
+                <SelectGroup>
+                  <SelectLabel>B.Com</SelectLabel>
+                  <SelectItem value="accounting">Accounting</SelectItem>
+                  <SelectItem value="finance">Finance</SelectItem>
+                </SelectGroup>
+                <SelectGroup>
+                  <SelectLabel>B.Sc</SelectLabel>
+                  <SelectItem value="physics">Physics</SelectItem>
+                  <SelectItem value="chemistry">Chemistry</SelectItem>
+                  <SelectItem value="maths">Mathematics</SelectItem>
+                </SelectGroup>
               </SelectContent>
             </Select>
           </div>
@@ -147,16 +162,9 @@ const Signup = () => {
             <Select
               onValueChange={(value) => setInput({ ...input, year: value })}
               value={input.year}
-              disabled={input.role === "teacher"}
-              required={input.role !== "teacher"}
+              required
             >
-              <SelectTrigger
-                className={`w-full font-semibold text-black ${
-                  input.role === "teacher"
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
-                }`}
-              >
+              <SelectTrigger className="w-full font-semibold text-black">
                 <SelectValue placeholder="Select a year" />
               </SelectTrigger>
               <SelectContent>
@@ -207,10 +215,7 @@ const Signup = () => {
             onCheckedChange={setTermsAccepted}
           />
           <div className="grid gap-1.5 leading-none">
-            <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none"
-            >
+            <label htmlFor="terms" className="text-sm font-medium leading-none">
               Accept terms and conditions
             </label>
             <p className="text-sm text-muted-foreground">
